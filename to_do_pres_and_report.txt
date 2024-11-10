@@ -1,0 +1,4 @@
+1. poprawa w ida, report - wziete zostaly tylko cechy ktore sa int i float - potem dowiedzielismy sie ze sa w formie stringow
+
+
+na 22.11 - zbudowane modele regresyjne (odrębny dla każdej platformy) - muszą działać, nie ważne czy dobrze czy źle
