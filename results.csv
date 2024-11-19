@@ -1,0 +1,17 @@
+Model,Recipe,RMSE_Train,RMSE_Validation
+Linear Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.804901653616724,29.440962459140355
+Polynomial Regression (degree=2),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.032418619983645,28.356035970938784
+SVM,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,38.91973176722775,31.66392685780243
+MLP,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,38.092091824635574,31.586380048086802
+Linear Regression,TikTok Posts+TikTok Likes+TikTok Views,37.1373589497774,33.90718049864366
+Polynomial Regression (degree=2),TikTok Posts+TikTok Likes+TikTok Views,36.5739757491909,183.27952354999601
+SVM,TikTok Posts+TikTok Likes+TikTok Views,38.97225321171041,32.11465815787101
+MLP,TikTok Posts+TikTok Likes+TikTok Views,38.082286155184356,31.569755056997998
+Linear Regression,YouTube Views+YouTube Likes,37.1523196651864,30.727268995191864
+Polynomial Regression (degree=2),YouTube Views+YouTube Likes,36.97799628222255,30.638994040264127
+SVM,YouTube Views+YouTube Likes,39.36978208342262,32.90951534199842
+MLP,YouTube Views+YouTube Likes,38.09424939385304,31.577915406277576
+Linear Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,35.40825603410556,31.413701295403627
+Polynomial Regression (degree=2),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,33.47297535409298,65.23843102234278
+SVM,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,38.22247686259104,30.848964429567907
+MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,37.9108705446124,31.414957888678614
