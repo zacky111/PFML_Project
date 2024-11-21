@@ -16,7 +16,7 @@ from sklearn.metrics import mean_squared_error
 import os
 
 import receptury
-import modele
+
 
 
 ## ------------------------------- ładowanie plików z danymi
@@ -121,7 +121,7 @@ for recipe in recepturyList:
 
         # Pętla dla różnych kerneli
     # Pętla po kernelach
-    for kernel in ['linear', 'poly', 'rbf', 'sigmoid']:
+    for kernel in ['linear']:#, 'poly', 'rbf', 'sigmoid']:
         print(f"Optimizing SVM with kernel: {kernel}")
         
         # Tworzenie modelu i przestrzeni parametrów
@@ -138,6 +138,7 @@ for recipe in recepturyList:
             n_jobs=-1  # Użycie wielu procesorów
         )
         
+
         # Dopasowanie modelu
         grid_search_svm.fit(X_train[recipe], y_train)
         
