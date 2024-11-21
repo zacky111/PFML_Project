@@ -1,0 +1,3 @@
+Model,Recipe,Params,RMSE_Train,RMSE_Validation
+Polynomial Regression (degree=4),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 4,32.592,106840.486
+Polynomial Regression (degree=2),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 2,36.032,28.356

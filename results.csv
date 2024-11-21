@@ -1,29 +1,29 @@
-Model,Recipe,RMSE_Train,RMSE_Validation
-Linear Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.805,29.441
-Polynomial Regression (degree=1),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.805,29.441
-Polynomial Regression (degree=2),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.032,28.356
-Polynomial Regression (degree=3),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.186,28.559
-Polynomial Regression (degree=4),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,36.988,29.232
-SVM,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,38.92,31.664
-MLP,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,38.092,31.586
-Linear Regression,TikTok Posts+TikTok Likes+TikTok Views,37.137,33.907
-Polynomial Regression (degree=1),TikTok Posts+TikTok Likes+TikTok Views,37.137,33.907
-Polynomial Regression (degree=2),TikTok Posts+TikTok Likes+TikTok Views,36.574,183.28
-Polynomial Regression (degree=3),TikTok Posts+TikTok Likes+TikTok Views,36.664,2151.268
-Polynomial Regression (degree=4),TikTok Posts+TikTok Likes+TikTok Views,37.467,6121.174
-SVM,TikTok Posts+TikTok Likes+TikTok Views,38.972,32.115
-MLP,TikTok Posts+TikTok Likes+TikTok Views,38.082,31.57
-Linear Regression,YouTube Views+YouTube Likes,37.152,30.727
-Polynomial Regression (degree=1),YouTube Views+YouTube Likes,37.152,30.727
-Polynomial Regression (degree=2),YouTube Views+YouTube Likes,36.978,30.639
-Polynomial Regression (degree=3),YouTube Views+YouTube Likes,37.086,30.93
-Polynomial Regression (degree=4),YouTube Views+YouTube Likes,37.211,31.249
-SVM,YouTube Views+YouTube Likes,39.37,32.91
-MLP,YouTube Views+YouTube Likes,38.094,31.578
-Linear Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,35.408,31.414
-Polynomial Regression (degree=1),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,35.408,31.414
-Polynomial Regression (degree=2),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,33.473,65.238
-Polynomial Regression (degree=3),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,33.39,3736.219
-Polynomial Regression (degree=4),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,32.592,106840.486
-SVM,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,38.222,30.849
-MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,37.911,31.415
+Model,Recipe,Params,RMSE_Train,RMSE_Validation
+Linear Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,,36.805,29.441
+Polynomial Regression (degree=1),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 1,36.805,29.441
+Polynomial Regression (degree=2),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 2,36.032,28.356
+Polynomial Regression (degree=3),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 3,36.186,28.559
+Polynomial Regression (degree=4),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 4,36.988,29.232
+SVM,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,,38.92,31.664
+MLP,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,,38.1,31.574
+Linear Regression,TikTok Posts+TikTok Likes+TikTok Views,,37.137,33.907
+Polynomial Regression (degree=1),TikTok Posts+TikTok Likes+TikTok Views,degree: 1,37.137,33.907
+Polynomial Regression (degree=2),TikTok Posts+TikTok Likes+TikTok Views,degree: 2,36.574,183.28
+Polynomial Regression (degree=3),TikTok Posts+TikTok Likes+TikTok Views,degree: 3,36.664,2151.268
+Polynomial Regression (degree=4),TikTok Posts+TikTok Likes+TikTok Views,degree: 4,37.467,6121.174
+SVM,TikTok Posts+TikTok Likes+TikTok Views,,38.972,32.115
+MLP,TikTok Posts+TikTok Likes+TikTok Views,,38.089,31.567
+Linear Regression,YouTube Views+YouTube Likes,,37.152,30.727
+Polynomial Regression (degree=1),YouTube Views+YouTube Likes,degree: 1,37.152,30.727
+Polynomial Regression (degree=2),YouTube Views+YouTube Likes,degree: 2,36.978,30.639
+Polynomial Regression (degree=3),YouTube Views+YouTube Likes,degree: 3,37.086,30.93
+Polynomial Regression (degree=4),YouTube Views+YouTube Likes,degree: 4,37.211,31.249
+SVM,YouTube Views+YouTube Likes,,39.37,32.91
+MLP,YouTube Views+YouTube Likes,,38.098,31.572
+Linear Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,,35.408,31.414
+Polynomial Regression (degree=1),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 1,35.408,31.414
+Polynomial Regression (degree=2),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 2,33.473,65.238
+Polynomial Regression (degree=3),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 3,33.39,3736.219
+Polynomial Regression (degree=4),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 4,32.592,106840.486
+SVM,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,,38.222,30.849
+MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,,37.99,31.417
