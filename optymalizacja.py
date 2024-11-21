@@ -17,25 +17,20 @@ import os
 
 import receptury
 
-
-
-## ------------------------------- ładowanie plików z danymi
+## ------------------------------- Loading data files
 folder_name = "datasets"
 X_train = pd.read_csv(os.path.join(folder_name, "X_train.csv"))
 X_val = pd.read_csv(os.path.join(folder_name, "X_val.csv"))
 X_test = pd.read_csv(os.path.join(folder_name, "X_test.csv"))
 
-y_train = pd.read_csv(os.path.join(folder_name, "y_train.csv")).squeeze()  # Zamiana na Series
+y_train = pd.read_csv(os.path.join(folder_name, "y_train.csv")).squeeze()  # Convert to Series
 y_val = pd.read_csv(os.path.join(folder_name, "y_val.csv")).squeeze()
 y_test = pd.read_csv(os.path.join(folder_name, "y_test.csv")).squeeze()
 
 results=[]
 
-
-
 #-----------------------------------------------------------------------------------
-#################################### Main pętla ####################################
-
+#################################### Main loop ####################################
 recepturyList=[receptury.recipe_spotify_col,
                receptury.recipe_tiktok_col,
                receptury.recipe_youtube_col,
@@ -43,7 +38,7 @@ recepturyList=[receptury.recipe_spotify_col,
 
 for recipe in recepturyList:
 
-    recipe_name = "+".join(recipe)  # Łączenie nazw kolumn w nazwę receptury
+    recipe_name = "+".join(recipe)  # Combine column names into a recipe name
 
     ##-------------------- Linear Regression
 
@@ -64,11 +59,9 @@ for recipe in recepturyList:
     params=None
     results.append(["Linear Regression", recipe_name,  params, rmse_train, rmse_val])
 
+    ##-------------------- Polynomial Regression
 
-    ##-------------------- Wielomian
-
-    print ("---------Wielomian")
-
+    print ("---------Polynomial Regression")
 
     for degree in range(1,5):
         
@@ -82,7 +75,6 @@ for recipe in recepturyList:
 
         y_train_pred_poly = poly_model.predict(X_train_poly)
         y_val_pred_poly = poly_model.predict(X_val_poly)
-
 
         rmse_train_poly = round(np.sqrt(mean_squared_error(y_train, y_train_pred_poly)),3)
         rmse_val_poly = round(np.sqrt(mean_squared_error(y_val, y_val_pred_poly)),3)
@@ -98,12 +90,10 @@ for recipe in recepturyList:
     from sklearn.metrics import mean_squared_error
     import numpy as np
 
-
     print ("---------SVM")
-    # Tworzenie i trenowanie modelu SVM
+    # Creating and training the SVM model
 
-
-    # Warunkowe filtrowanie parametrów w RandomizedSearchCV
+    # Conditional parameter filtering for RandomizedSearchCV
     def filter_params(kernel):
         if kernel == 'poly':
             return {'C': [0.1, 1, 10, 100],
@@ -118,35 +108,32 @@ for recipe in recepturyList:
             return {'C': [0.1, 1, 10, 100],
                     'epsilon': [0.01, 0.1, 0.2, 0.5]}
 
-
-        # Pętla dla różnych kerneli
-    # Pętla po kernelach
+    # Loop through different kernels
     for kernel in ['linear']:#, 'poly', 'rbf', 'sigmoid']:
         print(f"Optimizing SVM with kernel: {kernel}")
         
-        # Tworzenie modelu i przestrzeni parametrów
+        # Creating the model and parameter space
         svm = SVR(kernel=kernel)
         param_grid = filter_params(kernel)
 
-        # Użycie GridSearchCV
+        # Using GridSearchCV
         grid_search_svm = GridSearchCV(
             estimator=svm,
             param_grid=param_grid,
             scoring='neg_mean_squared_error',
-            cv=3,  # Walidacja krzyżowa
+            cv=3,  # Cross-validation
             verbose=2,
-            n_jobs=-1  # Użycie wielu procesorów
+            n_jobs=-1  # Use multiple processors
         )
         
-
-        # Dopasowanie modelu
+        # Fitting the model
         grid_search_svm.fit(X_train[recipe], y_train)
         
-        # Najlepsze parametry
+        # Best parameters
         best_params_svm = grid_search_svm.best_params_
         print(f"Best params for {kernel}: {best_params_svm}")
         
-        # Predykcja i obliczenia RMSE
+        # Prediction and RMSE calculation
         y_pred_train_svm = grid_search_svm.predict(X_train[recipe])
         y_pred_val_svm = grid_search_svm.predict(X_val[recipe])
         
@@ -156,10 +143,8 @@ for recipe in recepturyList:
         print(f"SVM Training RMSE (kernel={kernel}): {rmse_train_svm:.4f}")
         print(f"SVM Validation RMSE (kernel={kernel}): {rmse_val_svm:.4f}")
         
-        # Dodanie wyników do listy
+        # Adding results to the list
         results.append([f"SVM (kernel={kernel})", recipe_name, best_params_svm, rmse_train_svm, rmse_val_svm])
-
-
 
     ##-------------------- MLP
 
@@ -177,13 +162,12 @@ for recipe in recepturyList:
     'n_iter_no_change': [5, 10, 20]
     }
 
-
     mlp = MLPRegressor(random_state=1)
 
     random_search = RandomizedSearchCV(
     mlp,
     param_distributions=param_distributions,
-    n_iter=5,  # Liczba losowych prób
+    n_iter=5,  # Number of random trials
     scoring='neg_mean_squared_error',
     cv=3,
     random_state=42,
@@ -202,42 +186,40 @@ for recipe in recepturyList:
     print(f'MLP Validation RMSE: {rmse_val:.4f}')
     results.append(["MLP", recipe_name, params,rmse_train, rmse_val])
 
-# Tworzenie DataFrame z wynikami
+# Creating DataFrame with results
 results_df = pd.DataFrame(results, columns=["Model", "Recipe", "Params", "RMSE_Train", "RMSE_Validation"])
 
-
-
-############################################ odnalezienienie najlepszego modelu:
-# Znalezienie wierszy z najmniejszym RMSE dla treningu i walidacji
+############################################ Finding the best model:
+# Find rows with the smallest RMSE for training and validation
 min_rmse_train = results_df.loc[results_df['RMSE_Train'].idxmin()]
 min_rmse_val = results_df.loc[results_df['RMSE_Validation'].idxmin()]
 
-# Wyświetlenie wyników
-print("\nNajlepszy wynik na zbiorze treningowym:")
+# Display results
+print("\nBest result on the training set:")
 print(min_rmse_train)
-print("\nNajlepszy wynik na zbiorze walidacyjnym:")
+print("\nBest result on the validation set:")
 print(min_rmse_val)
 
-
-## ----- Wyświetlanie wyników i zapisanie ich do csv
+## ----- Displaying results and saving them to CSV
 print('#===============================================================================|')
 print(results_df)
 results_df.to_csv("results.csv", index=False)
 
-# Zapisanie tych wyników do pliku CSV
+# Saving these results to a CSV file
 best_results_df = pd.DataFrame([min_rmse_train, min_rmse_val])
 best_results_df.to_csv("best_results.csv", index=False)
 print('#===============================================================================|')
 
-"""
-## ------ Najlepsze modele dla każdej receptury
-# Grupowanie po recepturze i wybieranie wiersza z minimalnym RMSE_Validation
+
+## ------ Best models for each recipe
+# Grouping by recipe and selecting the row with the smallest RMSE_Validation
 best_models_per_recipe = results_df.loc[results_df.groupby("Recipe")["RMSE_Validation"].idxmin()]
-
-# Wyświetlanie wyników
-print("\nNajlepsze modele dla każdej receptury:")
-print(best_models_per_recipe)
-
-# Zapisanie wyników do pliku CSV
-best_models_per_recipe.to_csv("best_models_per_recipe.csv", index=False)
 """
+# Displaying results
+print("\nBest models for each recipe:")
+print(best_models_per_recipe)
+"""
+# Saving results to a CSV file
+best_models_per_recipe.to_csv("best_models_per_recipe.csv", index=False)
+
+print("done")

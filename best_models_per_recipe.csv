@@ -1,0 +1,5 @@
+Model,Recipe,Params,RMSE_Train,RMSE_Validation
+MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,"{'solver': 'sgd', 'n_iter_no_change': 20, 'max_iter': 2000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (50, 50), 'early_stopping': True, 'alpha': 0.001, 'activation': 'logistic'}",27.829,24.11
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 4,30.415,24.856
+MLP,TikTok Posts+TikTok Likes+TikTok Views,"{'solver': 'adam', 'n_iter_no_change': 5, 'max_iter': 2000, 'learning_rate_init': 0.01, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.01, 'activation': 'logistic'}",36.585,29.574
+Polynomial Regression,YouTube Views+YouTube Likes,degree: 2,36.978,30.57
