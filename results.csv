@@ -1,29 +1,29 @@
-Model,Recipe,Params,RMSE_Train,RMSE_Validation
-Linear Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,,36.902,29.445
-Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 1,36.912,29.498
-Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 2,34.526,28.049
-Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 3,31.984,26.253
-Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 4,30.415,24.856
-SVM (kernel=linear),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,"{'C': 100, 'epsilon': 0.1}",38.583,31.34
-MLP,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,"{'solver': 'sgd', 'n_iter_no_change': 10, 'max_iter': 3000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.0001, 'activation': 'relu'}",31.794,26.381
-Linear Regression,TikTok Posts+TikTok Likes+TikTok Views,,36.801,33.654
-Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 1,36.801,33.654
-Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 2,36.024,145.036
-Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 3,35.7,2199.956
-Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 4,35.231,6665.416
-SVM (kernel=linear),TikTok Posts+TikTok Likes+TikTok Views,"{'C': 100, 'epsilon': 0.5}",38.619,33.002
-MLP,TikTok Posts+TikTok Likes+TikTok Views,"{'solver': 'adam', 'n_iter_no_change': 5, 'max_iter': 2000, 'learning_rate_init': 0.01, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.01, 'activation': 'logistic'}",36.585,29.574
-Linear Regression,YouTube Views+YouTube Likes,,37.172,30.576
-Polynomial Regression,YouTube Views+YouTube Likes,degree: 1,37.172,30.576
-Polynomial Regression,YouTube Views+YouTube Likes,degree: 2,36.978,30.57
-Polynomial Regression,YouTube Views+YouTube Likes,degree: 3,36.9,30.689
-Polynomial Regression,YouTube Views+YouTube Likes,degree: 4,36.782,30.774
-SVM (kernel=linear),YouTube Views+YouTube Likes,"{'C': 100, 'epsilon': 0.5}",38.74,32.137
-MLP,YouTube Views+YouTube Likes,"{'solver': 'sgd', 'n_iter_no_change': 10, 'max_iter': 3000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.0001, 'activation': 'relu'}",37.331,30.888
-Linear Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,,35.028,30.221
-Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 1,35.028,30.241
-Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 2,30.291,106.667
-Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 3,24.193,1354.196
-Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 4,18.443,175652.992
-SVM (kernel=linear),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,"{'C': 100, 'epsilon': 0.5}",36.932,29.964
-MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,"{'solver': 'sgd', 'n_iter_no_change': 20, 'max_iter': 2000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (50, 50), 'early_stopping': True, 'alpha': 0.001, 'activation': 'logistic'}",27.829,24.11
+Model,Recipe,Params,RMSE_Train,RMSE_Validation,RMSE_Ratio,R2_Train,R2_Validation,R2_Ratio
+MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,"{'solver': 'sgd', 'n_iter_no_change': 20, 'max_iter': 2000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (50, 50), 'early_stopping': True, 'alpha': 0.001, 'activation': 'logistic'}",27.829,24.11,670.95719,-774.469,-581.316,450211.22120400006
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 4,30.415,24.856,755.9952400000001,0.363,0.38,0.13794
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 3,31.984,26.253,839.675952,0.295,0.309,0.091155
+MLP,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,"{'solver': 'sgd', 'n_iter_no_change': 10, 'max_iter': 3000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.0001, 'activation': 'relu'}",31.794,26.381,838.757514,-1010.851,-695.943,703494.6774929999
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 2,34.526,28.049,968.4197740000001,0.179,0.211,0.037769
+Linear Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,,36.902,29.445,1086.57939,0.062,0.13,0.00806
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 1,36.909,29.48,1088.0773199999999,0.061,0.128,0.007808
+MLP,TikTok Posts+TikTok Likes+TikTok Views,"{'solver': 'adam', 'n_iter_no_change': 5, 'max_iter': 2000, 'learning_rate_init': 0.01, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.01, 'activation': 'logistic'}",36.585,29.574,1081.96479,-1338.481,-874.61,1170648.86741
+SVM (kernel=linear),Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,"{'C': 100, 'epsilon': 0.5}",36.932,29.964,1106.6304480000001,-1363.968,-897.866,1224660.492288
+Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 1,35.038,30.215,1058.6731699999998,0.154,0.084,0.012936000000000001
+Linear Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,,35.028,30.221,1058.5811879999999,0.155,0.084,0.01302
+Polynomial Regression,YouTube Views+YouTube Likes,degree: 2,36.978,30.57,1130.4174600000001,0.058,0.062,0.0035960000000000002
+Polynomial Regression,YouTube Views+YouTube Likes,degree: 1,37.172,30.576,1136.571072,0.048,0.062,0.002976
+Linear Regression,YouTube Views+YouTube Likes,,37.172,30.576,1136.571072,0.048,0.062,0.002976
+Polynomial Regression,YouTube Views+YouTube Likes,degree: 3,36.9,30.689,1132.4241,0.062,0.055,0.00341
+Polynomial Regression,YouTube Views+YouTube Likes,degree: 4,36.782,30.774,1131.9292679999999,0.068,0.05,0.0034000000000000002
+MLP,YouTube Views+YouTube Likes,"{'solver': 'sgd', 'n_iter_no_change': 10, 'max_iter': 3000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.0001, 'activation': 'relu'}",37.331,30.888,1153.079928,-1393.572,-954.058,1329548.5151759998
+SVM (kernel=linear),Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,"{'C': 100, 'epsilon': 0.1}",38.583,31.34,1209.19122,-1488.664,-982.226,1462204.486064
+SVM (kernel=linear),YouTube Views+YouTube Likes,"{'C': 100, 'epsilon': 0.5}",38.74,32.137,1244.98738,-1500.79,-1032.756,1549949.87724
+SVM (kernel=linear),TikTok Posts+TikTok Likes+TikTok Views,"{'C': 100, 'epsilon': 0.5}",38.619,33.002,1274.504238,-1491.457,-1089.107,1624356.258899
+Linear Regression,TikTok Posts+TikTok Likes+TikTok Views,,36.801,33.654,1238.5008540000001,0.067,-0.136,0.009112000000000002
+Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 1,36.801,33.654,1238.5008540000001,0.067,-0.136,0.009112000000000002
+Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 2,30.169,86.24,2601.77456,0.373,-6.461,2.4099530000000002
+Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 2,36.024,145.036,5224.776864,0.106,-20.103,2.1309180000000003
+Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 3,24.193,1354.196,32762.063828,0.597,-1838.737,1097.725989
+Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 3,35.7,2199.956,78538.42920000001,0.122,-4854.356,592.2314319999999
+Polynomial Regression,TikTok Posts+TikTok Likes+TikTok Views,degree: 4,35.231,6665.416,234829.271096,0.145,-44569.499,6462.577355
+Polynomial Regression,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,degree: 4,18.443,175652.992,3239568.1314560003,0.766,-30953091.192,23710067.853072003

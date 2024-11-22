@@ -6,9 +6,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import PolynomialFeatures
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import PredictionErrorDisplay
+from sklearn.svm import SVR
 import math
 import warnings
 from fancyimpute import KNN
@@ -54,10 +56,17 @@ for recipe in recepturyList:
     rmse_train = round(np.sqrt(mean_squared_error(y_train, y_train_pred)),3)
     rmse_val = round(np.sqrt(mean_squared_error(y_val, y_val_pred)),3)
 
+    r2_train = round(model.score(X_train[recipe], y_train), 3)
+    r2_val = round(model.score(X_val[recipe], y_val), 3)
+
+    rmse_ratio=abs(rmse_train*rmse_val)
+    r2_ratio=abs(r2_train*r2_val)
+
+
     print("Linear Regression Training RMSE:", rmse_train)
     print("Linear Regression Validation RMSE:", rmse_val)
     params=None
-    results.append(["Linear Regression", recipe_name,  params, rmse_train, rmse_val])
+    results.append(["Linear Regression", recipe_name,  params, rmse_train, rmse_val,rmse_ratio, r2_train, r2_val,r2_ratio])
 
     ##-------------------- Polynomial Regression
 
@@ -79,16 +88,19 @@ for recipe in recepturyList:
         rmse_train_poly = round(np.sqrt(mean_squared_error(y_train, y_train_pred_poly)),3)
         rmse_val_poly = round(np.sqrt(mean_squared_error(y_val, y_val_pred_poly)),3)
 
-        params="degree: " + str(degree)
+        r2_train_poly = round(poly_model.score(X_train_poly, y_train), 3)
+        r2_val_poly = round(poly_model.score(X_val_poly, y_val), 3)
+
+        rmse_ratio=abs(rmse_train_poly*rmse_val_poly)
+        r2_ratio=abs(r2_train_poly*r2_val_poly)
+
+        params="degree=" + str(degree)
         print(f"Polynomial Regression Training RMSE:", rmse_train_poly)
         print(f"Polynomial Regression Validation RMSE:", rmse_val_poly)
-        results.append([f"Polynomial Regression", recipe_name, params, rmse_train_poly, rmse_val_poly])
+        results.append([f"Polynomial Regression", recipe_name, params, rmse_train_poly, rmse_val_poly, rmse_ratio, r2_train_poly,r2_val_poly,r2_ratio])
 
     ##-------------------- SVM
 
-    from sklearn.svm import SVR
-    from sklearn.metrics import mean_squared_error
-    import numpy as np
 
     print ("---------SVM")
     # Creating and training the SVM model
@@ -139,12 +151,20 @@ for recipe in recepturyList:
         
         rmse_train_svm = round(np.sqrt(mean_squared_error(y_train, y_pred_train_svm)), 3)
         rmse_val_svm = round(np.sqrt(mean_squared_error(y_val, y_pred_val_svm)), 3)
+
+        r2_train_svm = round(grid_search_svm.score(X_train[recipe], y_train), 3)
+        r2_val_svm = round(grid_search_svm.score(X_val[recipe], y_val), 3)
+
+        
+
+        rmse_ratio=abs(rmse_train_svm*rmse_val_svm)
+        r2_ratio=abs(r2_train_svm*r2_val_svm)
         
         print(f"SVM Training RMSE (kernel={kernel}): {rmse_train_svm:.4f}")
         print(f"SVM Validation RMSE (kernel={kernel}): {rmse_val_svm:.4f}")
         
         # Adding results to the list
-        results.append([f"SVM (kernel={kernel})", recipe_name, best_params_svm, rmse_train_svm, rmse_val_svm])
+        results.append([f"SVM (kernel={kernel})", recipe_name, best_params_svm, rmse_train_svm, rmse_val_svm,rmse_ratio,r2_train_svm,r2_val_svm,r2_ratio])
 
     ##-------------------- MLP
 
@@ -182,31 +202,45 @@ for recipe in recepturyList:
     rmse_train = round(np.sqrt(mean_squared_error(y_train, y_pred_train)),3)
     rmse_val = round(np.sqrt(mean_squared_error(y_val, y_pred_val)),3)
 
+    r2_train = round(random_search.score(X_train[recipe], y_train), 3)
+    r2_val = round(random_search.score(X_val[recipe], y_val), 3)
+
+    rmse_ratio=abs(rmse_train*rmse_val)
+    r2_ratio=abs(r2_train*r2_val)
+
     print(f'MLP Training RMSE: {rmse_train:.4f}')
     print(f'MLP Validation RMSE: {rmse_val:.4f}')
-    results.append(["MLP", recipe_name, params,rmse_train, rmse_val])
+    results.append(["MLP", recipe_name, params,rmse_train, rmse_val, rmse_ratio,r2_train,r2_val,r2_ratio])
 
 # Creating DataFrame with results
-results_df = pd.DataFrame(results, columns=["Model", "Recipe", "Params", "RMSE_Train", "RMSE_Validation"])
+results_df = pd.DataFrame(results, columns=["Model", "Recipe", "Params", "RMSE_Train", "RMSE_Validation","RMSE_Ratio","R2_Train","R2_Validation","R2_Ratio"])
 
 ############################################ Finding the best model:
 # Find rows with the smallest RMSE for training and validation
 min_rmse_train = results_df.loc[results_df['RMSE_Train'].idxmin()]
 min_rmse_val = results_df.loc[results_df['RMSE_Validation'].idxmin()]
+min_rmse_ratio=results_df.loc[results_df['RMSE_Ratio'].idxmin()]
+min_r2_ratio=results_df.loc[results_df['R2_Train'].idxmin()]
 
 # Display results
 print("\nBest result on the training set:")
 print(min_rmse_train)
 print("\nBest result on the validation set:")
 print(min_rmse_val)
+print("\nBest result on ration: rmse_traning*rmse_validation: ")
+print(min_rmse_ratio)
+print("\nBest result on ration: r2_train*r2_validation:")
+print(min_r2_ratio)
 
 ## ----- Displaying results and saving them to CSV
 print('#===============================================================================|')
+results_df=results_df.sort_values(by="RMSE_Validation")
 print(results_df)
 results_df.to_csv("results.csv", index=False)
 
 # Saving these results to a CSV file
-best_results_df = pd.DataFrame([min_rmse_train, min_rmse_val])
+top_4 = results_df.head(4)
+best_results_df = pd.DataFrame(top_4)
 best_results_df.to_csv("best_results.csv", index=False)
 print('#===============================================================================|')
 
@@ -222,4 +256,6 @@ print(best_models_per_recipe)
 # Saving results to a CSV file
 best_models_per_recipe.to_csv("best_models_per_recipe.csv", index=False)
 
-print("done")
+
+"""PredictionErrorDisplay.from_estimator(reg, X_test, y_test, kind="residual_vs_predicted")
+PredictionErrorDisplay.from_predictions(y_true=y_test, y_pred=y_pred, kind="actual_vs_predicted")"""
