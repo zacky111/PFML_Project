@@ -11,7 +11,6 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVR
 from sklearn.metrics import PredictionErrorDisplay
-
 import math
 import warnings
 from fancyimpute import KNN
@@ -31,46 +30,132 @@ y_val = pd.read_csv(os.path.join(folder_name, "y_val.csv")).squeeze()
 y_test = pd.read_csv(os.path.join(folder_name, "y_test.csv")).squeeze()
 
 
-## import best models
-top_4= pd.read_csv(os.path.join("best_results.csv"))
+## --------------------------------- nan in "X_test" rows
+#mean value of each column in training set
+median=X_train.select_dtypes(include=['number']).median() #### <----------------- tu ew. miejsce na zmianę czy ma to być mean, czy mediana
 
-model_dict = {
-    'MLP': "MLPRegressor",
-    'Linear Regression': "LinearRegression",
-    'Polynomial Regression': "PolynomialFeatures",
-    'SVM': "SVR"
+X_test_filled = X_test.copy()
+for column in X_test_filled.select_dtypes(include=['number']).columns:
+    if column in median:
+        X_test_filled[column] = X_test_filled[column].fillna(median[column])
+
+
+X_test=X_test_filled
+
+
+## import best models
+#top_4= pd.read_csv(os.path.join("best_results.csv"))
+#print(top_4)
+
+##reading through them and rewritting into dictionaries
+
+##Model1
+Model1_parametry = {
+    'solver': 'sgd',
+    'n_iter_no_change': 20,
+    'max_iter': 2000,
+    'learning_rate_init': 0.001,
+    'learning_rate': 'constant',
+    'hidden_layer_sizes': (50, 50),
+    'early_stopping': True,
+    'alpha': 0.001,
+    'activation': 'logistic'
+}
+Model1 =MLPRegressor(**Model1_parametry)
+Model1_receptura=receptury.recipe_all
+
+##Model2
+Model2_parametry = {
+    'degree': 4,
+    'include_bias': False  # Wartość False, jeśli nie chcesz dodawać biasu
 }
 
-"""
-for row in top_4:
-    print(f"MODEL: {row} ---------------------------------------------")
-    type=row[1]
-    print(row)
-"""
-for index, row in top_4.iterrows():
-    print(f"Index: {index}")
-    print(f"RMSE_Validation: {row['Model']}")
-    print(f"RMSE_Validation: {row['RMSE_Validation']}")
+Model2_receptura = receptury.recipe_spotify_col
+Model2_poly = PolynomialFeatures(degree=Model2_parametry['degree'])
 
-    params=row["Params"]
-    model_name=row["Model"]
-    recipe=row["Recipe"]
+X_train_poly_model2 = Model2_poly.fit_transform(X_train[Model2_receptura])
+X_test_poly_model2 = Model2_poly.transform(X_test[Model2_receptura])
 
-    recipe_list=[]    
-    recipe_list=recipe.split("+")
+Model2=LinearRegression()
 
-    model = None
-    cmd=f"model = {model_dict[model_name]}({params})"
-    print(cmd)
-    exec(cmd)
+##Model3
+Model3_parametry = {
+    'degree': 3,
+    'include_bias': False
+}
 
-    model.fit(X_train[recipe_list],y_train)
-    
+Model3_receptura = receptury.recipe_spotify_col
+Model3_poly = PolynomialFeatures(degree=Model3_parametry['degree'])
+Model3=LinearRegression()
+
+X_train_poly_model3 = Model3_poly.fit_transform(X_train[Model3_receptura])
+X_test_poly_model3 = Model3_poly.transform(X_test[Model3_receptura])
 
 
+##Model4
+Model4_parametry = {
+    'solver': 'sgd',
+    'n_iter_no_change': 10,
+    'max_iter': 3000,
+    'learning_rate_init': 0.001,
+    'learning_rate': 'constant',
+    'hidden_layer_sizes': (10,),  # Jedna warstwa ukryta z 10 neuronami
+    'early_stopping': True,
+    'alpha': 0.0001,
+    'activation': 'relu'
+}
+
+Model4_receptura = receptury.recipe_spotify_col
+Model4 = MLPRegressor(**Model4_parametry)
 
 
+######################################################################### training models
+
+Model1.fit(X_train[Model1_receptura],y_train)
+Model2.fit(X_train_poly_model2,y_train)
+Model3.fit(X_train_poly_model3,y_train)
+Model4.fit(X_train[Model4_receptura],y_train)
+
+################# testing
+print("Model1:")
+y_train_pred_model1 = Model1.predict(X_train[Model1_receptura])
+y_test_pred_model1 = Model1.predict(X_test[Model1_receptura])
+
+rmse_train_model1= round(np.sqrt(mean_squared_error(y_train, y_train_pred_model1)),3)
+rmse_val_model1 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model1)),3)
+
+print(f"Polynomial Regression Training RMSE:", rmse_train_model1)
+print(f"Polynomial Regression Validation RMSE:", rmse_val_model1)
 
 
+print("Model2:")
+y_train_pred_model2 = Model2.predict(X_train_poly_model2)
+y_test_pred_model2 = Model2.predict(X_test_poly_model2)
+
+rmse_train_model2= round(np.sqrt(mean_squared_error(y_train, y_train_pred_model2)),3)
+rmse_val_model2 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model2)),3)
+
+print(f"Polynomial Regression Training RMSE:", rmse_train_model2)
+print(f"Polynomial Regression Validation RMSE:", rmse_val_model2)
 
 
+print("Model3:")
+y_train_pred_model3 = Model3.predict(X_train_poly_model3)
+y_test_pred_model3 = Model3.predict(X_test_poly_model3)
+
+rmse_train_model3= round(np.sqrt(mean_squared_error(y_train, y_train_pred_model3)),3)
+rmse_val_model3 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model3)),3)
+
+print(f"Polynomial Regression Training RMSE:", rmse_train_model3)
+print(f"Polynomial Regression Validation RMSE:", rmse_val_model3)
+
+
+print("Model4:")
+y_train_pred_model4 = Model4.predict(X_train[Model4_receptura])
+y_test_pred_model4 = Model4.predict(X_test[Model4_receptura])
+
+rmse_train_model4= round(np.sqrt(mean_squared_error(y_train, y_train_pred_model1)),3)
+rmse_val_model4 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model1)),3)
+
+print(f"Polynomial Regression Training RMSE:", rmse_train_model1)
+print(f"Polynomial Regression Validation RMSE:", rmse_val_model1)

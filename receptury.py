@@ -17,6 +17,8 @@ recipe_tiktok_names=["TikTok Posts",
                      "TikTok Views"]
 recipe_tiktok_col=pd.Index(recipe_tiktok_names)
 
+
+
 # do dokończenia
 recipe_all = recipe_spotify_col.union(recipe_youtube_col).union(recipe_tiktok_col)
 
