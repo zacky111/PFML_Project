@@ -11,6 +11,7 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVR
 from sklearn.metrics import PredictionErrorDisplay
+from sklearn.pipeline import make_pipeline
 import math
 import warnings
 from fancyimpute import KNN
@@ -32,7 +33,7 @@ y_test = pd.read_csv(os.path.join(folder_name, "y_test.csv")).squeeze()
 
 ## --------------------------------- nan in "X_test" rows
 #mean value of each column in training set
-median=X_train.select_dtypes(include=['number']).median() #### <----------------- tu ew. miejsce na zmianę czy ma to być mean, czy mediana
+median=X_test.select_dtypes(include=['number']).median() #### <----------------- tu ew. miejsce na zmianę czy ma to być mean, czy mediana
 
 X_test_filled = X_test.copy()
 for column in X_test_filled.select_dtypes(include=['number']).columns:
@@ -42,7 +43,9 @@ for column in X_test_filled.select_dtypes(include=['number']).columns:
 
 X_test=X_test_filled
 
+print(X_test.isnull().sum())
 
+print(X_test_filled)
 ## import best models
 #top_4= pd.read_csv(os.path.join("best_results.csv"))
 #print(top_4)
@@ -85,11 +88,11 @@ Model3_parametry = {
 }
 
 Model3_receptura = receptury.recipe_spotify_col
-Model3_poly = PolynomialFeatures(degree=Model3_parametry['degree'])
-Model3=LinearRegression()
+Model3 = make_pipeline(PolynomialFeatures(degree=Model3_parametry['degree']), LinearRegression())
 
-X_train_poly_model3 = Model3_poly.fit_transform(X_train[Model3_receptura])
-X_test_poly_model3 = Model3_poly.transform(X_test[Model3_receptura])
+
+#X_train_poly_model3 = Model3_poly.fit_transform(X_train[Model3_receptura])
+#X_test_poly_model3 = Model3_poly.transform(X_test[Model3_receptura])
 
 
 ##Model4
@@ -113,7 +116,7 @@ Model4 = MLPRegressor(**Model4_parametry)
 
 Model1.fit(X_train[Model1_receptura],y_train)
 Model2.fit(X_train_poly_model2,y_train)
-Model3.fit(X_train_poly_model3,y_train)
+Model3.fit(X_train[Model3_receptura],y_train)
 Model4.fit(X_train[Model4_receptura],y_train)
 
 ################# testing
@@ -140,8 +143,8 @@ print(f"Polynomial Regression Validation RMSE:", rmse_val_model2)
 
 
 print("Model3:")
-y_train_pred_model3 = Model3.predict(X_train_poly_model3)
-y_test_pred_model3 = Model3.predict(X_test_poly_model3)
+y_train_pred_model3 = Model3.predict(X_train[Model3_receptura])
+y_test_pred_model3 = Model3.predict(X_test[Model3_receptura])
 
 rmse_train_model3= round(np.sqrt(mean_squared_error(y_train, y_train_pred_model3)),3)
 rmse_val_model3 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model3)),3)
@@ -159,3 +162,16 @@ rmse_val_model4 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model1)),
 
 print(f"Polynomial Regression Training RMSE:", rmse_train_model1)
 print(f"Polynomial Regression Validation RMSE:", rmse_val_model1)
+
+
+
+
+
+
+
+
+
+
+
+
+

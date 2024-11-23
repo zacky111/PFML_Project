@@ -1,5 +1,5 @@
 Model,Recipe,Params,RMSE_Train,RMSE_Validation,RMSE_Ratio,R2_Train,R2_Validation,R2_Ratio
 MLP,Spotify Playlist Count+Spotify Popularity+Spotify Popularity+Spotify Streams+TikTok Likes+TikTok Posts+TikTok Views+YouTube Likes+YouTube Views,"{'solver': 'sgd', 'n_iter_no_change': 20, 'max_iter': 2000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (50, 50), 'early_stopping': True, 'alpha': 0.001, 'activation': 'logistic'}",27.829,24.11,670.95719,-774.469,-581.316,450211.22120400006
-Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 4,30.415,24.856,755.9952400000001,0.363,0.38,0.13794
-Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree: 3,31.984,26.253,839.675952,0.295,0.309,0.091155
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree=4,30.415,24.856,755.9952400000001,0.363,0.38,0.13794
+Polynomial Regression,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,degree=3,31.984,26.253,839.675952,0.295,0.309,0.091155
 MLP,Spotify Streams+Spotify Playlist Count+Spotify Popularity+Spotify Popularity,"{'solver': 'sgd', 'n_iter_no_change': 10, 'max_iter': 3000, 'learning_rate_init': 0.001, 'learning_rate': 'constant', 'hidden_layer_sizes': (10,), 'early_stopping': True, 'alpha': 0.0001, 'activation': 'relu'}",31.794,26.381,838.757514,-1010.851,-695.943,703494.6774929999
