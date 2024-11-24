@@ -32,20 +32,19 @@ y_test = pd.read_csv(os.path.join(folder_name, "y_test.csv")).squeeze()
 
 
 ## --------------------------------- nan in "X_test" rows
+
+print("X_test: ")
+print(X_test)
+print(X_test.isnull().sum())
 #mean value of each column in training set
 median=X_test.select_dtypes(include=['number']).median() #### <----------------- tu ew. miejsce na zmianę czy ma to być mean, czy mediana
 
 X_test_filled = X_test.copy()
-for column in X_test_filled.select_dtypes(include=['number']).columns:
+for column in X_test.select_dtypes(include=['number']).columns:
     if column in median:
-        X_test_filled[column] = X_test_filled[column].fillna(median[column])
+        X_test[column] = X_test[column].fillna(median[column])
 
 
-X_test=X_test_filled
-
-print(X_test.isnull().sum())
-
-print(X_test_filled)
 ## import best models
 #top_4= pd.read_csv(os.path.join("best_results.csv"))
 #print(top_4)
