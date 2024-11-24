@@ -162,13 +162,36 @@ rmse_val_model4 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model1)),
 print(f"Polynomial Regression Training RMSE:", rmse_train_model1)
 print(f"Polynomial Regression Validation RMSE:", rmse_val_model1)
 
+## wizualizacja histogramów track score predyktowanego
+# Importowanie bibliotek
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+# Lista modeli i ich predykcji
+model_names = ['Model1', 'Model2', 'Model3', 'Model4']
+predictions = [y_test_pred_model1, y_test_pred_model2, y_test_pred_model3, y_test_pred_model4]
 
+# Iterowanie przez modele i wyświetlanie histogramów
+for model_name, y_pred in zip(model_names, predictions):
+    plt.figure(figsize=(12, 6))
 
+    # Histogram dla rzeczywistych wartości
+    plt.subplot(1, 2, 1)
+    sns.histplot(y_test, bins=10, kde=True, color='blue', label='Rzeczywiste')
+    plt.title(f'Rzeczywiste - {model_name}')
+    plt.xlabel('Track Score')
+    plt.ylabel('Frequency')
 
+    # Histogram dla przewidywanych wartości
+    plt.subplot(1, 2, 2)
+    sns.histplot(y_pred, bins=10, kde=True, color='green', label='Przewidywane')
+    plt.title(f'Przewidywane - {model_name}')
+    plt.xlabel('Track Score')
+    plt.ylabel('Frequency')
 
-
-
+    # Wyświetlenie wykresów
+    plt.tight_layout()
+    plt.show()
 
 
 
