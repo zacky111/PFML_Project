@@ -66,7 +66,7 @@ for recipe in recepturyList:
     print("Linear Regression Training RMSE:", rmse_train)
     print("Linear Regression Validation RMSE:", rmse_val)
     params=None
-    results.append(["Linear Regression", recipe_name,  params, rmse_train, rmse_val,rmse_ratio, r2_train, r2_val,r2_ratio])
+    results.append(["Linear Regression", recipe_name,  params, rmse_train, rmse_val,rmse_ratio])
 
     ##-------------------- Polynomial Regression
 
@@ -97,7 +97,7 @@ for recipe in recepturyList:
         params="degree=" + str(degree)
         print(f"Polynomial Regression Training RMSE:", rmse_train_poly)
         print(f"Polynomial Regression Validation RMSE:", rmse_val_poly)
-        results.append([f"Polynomial Regression", recipe_name, params, rmse_train_poly, rmse_val_poly, rmse_ratio, r2_train_poly,r2_val_poly,r2_ratio])
+        results.append([f"Polynomial Regression", recipe_name, params, rmse_train_poly, rmse_val_poly, rmse_ratio])
 
     ##-------------------- SVM
 
@@ -164,7 +164,7 @@ for recipe in recepturyList:
         print(f"SVM Validation RMSE (kernel={kernel}): {rmse_val_svm:.4f}")
         
         # Adding results to the list
-        results.append([f"SVM (kernel={kernel})", recipe_name, best_params_svm, rmse_train_svm, rmse_val_svm,rmse_ratio,r2_train_svm,r2_val_svm,r2_ratio])
+        results.append([f"SVM (kernel={kernel})", recipe_name, best_params_svm, rmse_train_svm, rmse_val_svm,rmse_ratio])
 
     ##-------------------- MLP
 
@@ -210,17 +210,17 @@ for recipe in recepturyList:
 
     print(f'MLP Training RMSE: {rmse_train:.4f}')
     print(f'MLP Validation RMSE: {rmse_val:.4f}')
-    results.append(["MLP", recipe_name, params,rmse_train, rmse_val, rmse_ratio,r2_train,r2_val,r2_ratio])
+    results.append(["MLP", recipe_name, params,rmse_train, rmse_val, rmse_ratio])
 
 # Creating DataFrame with results
-results_df = pd.DataFrame(results, columns=["Model", "Recipe", "Params", "RMSE_Train", "RMSE_Validation","RMSE_Ratio","R2_Train","R2_Validation","R2_Ratio"])
+results_df = pd.DataFrame(results, columns=["Model", "Recipe", "Params", "RMSE_Train", "RMSE_Validation","RMSE_Product"])
 
 ############################################ Finding the best model:
 # Find rows with the smallest RMSE for training and validation
 min_rmse_train = results_df.loc[results_df['RMSE_Train'].idxmin()]
 min_rmse_val = results_df.loc[results_df['RMSE_Validation'].idxmin()]
-min_rmse_ratio=results_df.loc[results_df['RMSE_Ratio'].idxmin()]
-min_r2_ratio=results_df.loc[results_df['R2_Train'].idxmin()]
+min_rmse_ratio=results_df.loc[results_df['RMSE_Product'].idxmin()]
+
 
 # Display results
 print("\nBest result on the training set:")
@@ -229,12 +229,11 @@ print("\nBest result on the validation set:")
 print(min_rmse_val)
 print("\nBest result on ration: rmse_traning*rmse_validation: ")
 print(min_rmse_ratio)
-print("\nBest result on ration: r2_train*r2_validation:")
-print(min_r2_ratio)
+
 
 ## ----- Displaying results and saving them to CSV
 print('#===============================================================================|')
-results_df=results_df.sort_values(by="RMSE_Validation")
+results_df=results_df.sort_values(by="RMSE_Product")
 print(results_df)
 results_df.to_csv("results.csv", index=False)
 

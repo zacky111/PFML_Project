@@ -39,10 +39,15 @@ print(X_test.isnull().sum())
 #mean value of each column in training set
 median=X_test.select_dtypes(include=['number']).median() #### <----------------- tu ew. miejsce na zmianę czy ma to być mean, czy mediana
 
-X_test_filled = X_test.copy()
+#X_test_filled = X_test.copy()
+
+
 for column in X_test.select_dtypes(include=['number']).columns:
     if column in median:
         X_test[column] = X_test[column].fillna(median[column])
+
+print(X_test)
+
 
 
 ## import best models
@@ -101,7 +106,7 @@ Model4_parametry = {
     'max_iter': 3000,
     'learning_rate_init': 0.001,
     'learning_rate': 'constant',
-    'hidden_layer_sizes': (10,),  # Jedna warstwa ukryta z 10 neuronami
+    'hidden_layer_sizes': (10,),  
     'early_stopping': True,
     'alpha': 0.0001,
     'activation': 'relu'
@@ -145,6 +150,7 @@ print("Model3:")
 y_train_pred_model3 = Model3.predict(X_train[Model3_receptura])
 y_test_pred_model3 = Model3.predict(X_test[Model3_receptura])
 
+
 rmse_train_model3= round(np.sqrt(mean_squared_error(y_train, y_train_pred_model3)),3)
 rmse_val_model3 = round(np.sqrt(mean_squared_error(y_test, y_test_pred_model3)),3)
 
@@ -168,7 +174,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Lista modeli i ich predykcji
-model_names = ['Model1', 'Model2', 'Model3', 'Model4']
+model_names = ['Model1: MLP', 'Model2: Polynomial Model', 'Model3: Polynomial Model', 'Model4: MLP']
 predictions = [y_test_pred_model1, y_test_pred_model2, y_test_pred_model3, y_test_pred_model4]
 
 # Iterowanie przez modele i wyświetlanie histogramów
@@ -176,18 +182,13 @@ for model_name, y_pred in zip(model_names, predictions):
     plt.figure(figsize=(12, 6))
 
     # Histogram dla rzeczywistych wartości
-    plt.subplot(1, 2, 1)
-    sns.histplot(y_test, bins=10, kde=True, color='blue', label='Rzeczywiste')
-    plt.title(f'Rzeczywiste - {model_name}')
+    sns.histplot(y_test, bins=40, kde=True, color='blue', label='Real', alpha=0.5)
+    sns.histplot(y_pred, bins=40, kde=True, color='green', label='Predicted', alpha=0.5)
+    plt.title(f'Comparison of actual vs. predicted values for track scores - {model_name}')
+    plt.xlim(0, 300)
     plt.xlabel('Track Score')
     plt.ylabel('Frequency')
-
-    # Histogram dla przewidywanych wartości
-    plt.subplot(1, 2, 2)
-    sns.histplot(y_pred, bins=10, kde=True, color='green', label='Przewidywane')
-    plt.title(f'Przewidywane - {model_name}')
-    plt.xlabel('Track Score')
-    plt.ylabel('Frequency')
+    plt.legend(title="Legenda")
 
     # Wyświetlenie wykresów
     plt.tight_layout()
@@ -195,5 +196,32 @@ for model_name, y_pred in zip(model_names, predictions):
 
 
 
+"""
 
+# Importowanie bibliotek
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+# Lista modeli i ich predykcji
+model_names = ['Model1: MLP', 'Model2: Polynomial Model', 'Model3: Polynomial Model', 'Model4: MLP']
+predictions = [y_test_pred_model1, y_test_pred_model2, y_test_pred_model3, y_test_pred_model4]
+
+# Tworzenie wspólnej figury
+plt.figure(figsize=(16, 12))
+
+# Iterowanie przez modele i tworzenie podwykresów
+for i, (model_name, y_pred) in enumerate(zip(model_names, predictions), 1):
+    plt.subplot(2, 2, i)
+    sns.histplot(y_test, bins=40, kde=True, color='blue', label='Rzeczywiste', alpha=0.5)
+    sns.histplot(y_pred, bins=40, kde=True, color='green', label='Przewidywane', alpha=0.5)
+    plt.title(f'Rzeczywiste vs Przewidywane - {model_name}')
+    plt.xlabel('Track Score')
+    plt.ylabel('Frequency')
+    plt.legend()
+
+# Dostosowanie odstępów między podwykresami
+plt.tight_layout()  
+# Wyświetlenie wykresu
+plt.show()
+
+"""
