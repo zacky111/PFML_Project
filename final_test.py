@@ -41,12 +41,9 @@ for column in X_test.select_dtypes(include=['number']).columns:
 
 print(X_test)
 
-
-
 ## import best models
 #top_4= pd.read_csv(os.path.join("best_results.csv"))
 #print(top_4)
-
 ##reading through them and rewritting into dictionaries
 
 ##Model1
@@ -186,8 +183,6 @@ for model_name, y_pred in zip(model_names, predictions):
     # Wyświetlenie wykresów
     plt.tight_layout()
     plt.show()
-
-
 
 """
 
